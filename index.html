@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界节日合集</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">🌍 世界节日合集</h1>
+            <button class="theme-toggle" id="themeToggle" title="切换主题">🌙</button>
+        </header>
+
+        <!-- 筛选栏 -->
+        <section class="filter-section">
+            <label class="filter-label">按国家/地区筛选：</label>
+            <div class="bubble-filter" id="countryFilter">
+                <!-- 气泡按钮将由JS动态生成 -->
+            </div>
+        </section>
+
+        <!-- 统计信息 -->
+        <section class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">共收录节日：</span>
+                <span class="stat-value" id="totalHolidays">0</span> 个
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">当前显示：</span>
+                <span class="stat-value" id="visibleHolidays">0</span> 个
+            </div>
+        </section>
+
+        <!-- 节日表格 -->
+        <table class="holiday-table">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>名称</th>
+                    <th>归属</th>
+                </tr>
+            </thead>
+            <tbody id="holidayTableBody">
+                <!-- 表格内容将由JS动态生成 -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 国旗Tooltip -->
+    <div class="flag-tooltip" id="flagTooltip"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

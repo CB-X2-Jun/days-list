@@ -1,0 +1,366 @@
+/* ===== CSS变量与主题 ===== */
+:root {
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --bg-hover: #f1f5f9;
+    --bg-thead: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --border-light: #f1f5f9;
+    --primary-color: #3b82f6;
+    --primary-rgb: 59, 130, 246;
+    --primary-alpha: rgba(59, 130, 246, 0.15);
+    --primary-bg: rgba(59, 130, 246, 0.08);
+    --success: #22c55e;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: #1e293b;
+    --bg-hover: #334155;
+    --bg-thead: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --border-light: #1e293b;
+    --primary-color: #60a5fa;
+    --primary-rgb: 96, 165, 250;
+    --primary-alpha: rgba(96, 165, 250, 0.2);
+    --primary-bg: rgba(96, 165, 250, 0.12);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+}
+
+/* ===== 基础样式 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 24px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== 头部 ===== */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.page-title {
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-toggle {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease;
+    border: 1px solid var(--border-color);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+    box-shadow: var(--shadow-md);
+}
+
+/* ===== 筛选栏 ===== */
+.filter-section {
+    background: var(--bg-secondary);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.filter-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.bubble-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.bubble-btn {
+    padding: 7px 17px;
+    border: 1.5px solid var(--border-color);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    user-select: none;
+    font-family: inherit;
+}
+
+.bubble-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-bg);
+}
+
+.bubble-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(var(--primary-rgb), 0.35);
+}
+
+/* ===== 统计栏 ===== */
+.stats-bar {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 20px;
+    padding: 14px 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+}
+
+.stat-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 19px;
+}
+
+/* ===== 表格 ===== */
+.holiday-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.holiday-table thead {
+    background: var(--bg-thead);
+}
+
+.holiday-table th {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.holiday-table tbody tr {
+    transition: background 0.15s ease;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.holiday-table tbody tr:hover {
+    background: var(--bg-hover);
+}
+
+.holiday-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.holiday-table td {
+    padding: 13px 18px;
+    font-size: 14px;
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+/* 日期列 */
+.date-cell {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--primary-color);
+}
+
+/* 名称列 */
+.name-cell {
+    font-weight: 500;
+}
+
+/* 归属列 - 国旗容器 */
+.country-cell {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+/* 国旗图标 */
+.flag-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.flag-icon-wrapper:hover {
+    transform: scale(1.15);
+}
+
+.flag-icon-wrapper .fi {
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* 中文国家名显示（用于无flag-icons的国家） */
+.country-text {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: default;
+    transition: all 0.15s ease;
+}
+
+.country-text:hover {
+    background: var(--primary-bg);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* ===== 国旗Tooltip ===== */
+.flag-tooltip {
+    position: fixed;
+    padding: 6px 13px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.flag-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.flag-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1a1a1a;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .filter-section {
+        padding: 14px 16px;
+    }
+
+    .bubble-btn {
+        padding: 6px 13px;
+        font-size: 12px;
+    }
+
+    .stats-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .holiday-table th,
+    .holiday-table td {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+
+/* ===== 动画 ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.holiday-table tbody tr {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.holiday-table tbody tr:nth-child(1) { animation-delay: 0.02s; }
+.holiday-table tbody tr:nth-child(2) { animation-delay: 0.04s; }
+.holiday-table tbody tr:nth-child(3) { animation-delay: 0.06s; }
+.holiday-table tbody tr:nth-child(4) { animation-delay: 0.08s; }
+.holiday-table tbody tr:nth-child(5) { animation-delay: 0.10s; }
