@@ -7,7 +7,7 @@ const countryNameMap = {
     'CN': '中国', 'HK': '香港', 'MO': '澳门', 'TW': '台湾',
     'JP': '日本', 'KR': '韩国', 'KP': '朝鲜', 'MN': '蒙古',
     'VN': '越南', 'LA': '老挝', 'KH': '柬埔寨', 'TH': '泰国',
-    'MY': '马来西亚', 'SG': '新加坡', 'ID': '印度尼西亚', 'PH': '菲律宾',
+    'MY': '马来西亚', 'SG': '新加坡', 'ID': '印尼', 'PH': '菲律宾',
     'BN': '文莱', 'MM': '缅甸', 'IN': '印度', 'NP': '尼泊尔',
     'BT': '不丹', 'BD': '孟加拉国', 'LK': '斯里兰卡', 'MV': '马尔代夫',
     'PK': '巴基斯坦', 'AF': '阿富汗', 'IR': '伊朗', 'IQ': '伊拉克',
@@ -34,7 +34,7 @@ const countryNameMap = {
     // 非洲
     'EG': '埃及', 'LY': '利比亚', 'TN': '突尼斯', 'DZ': '阿尔及利亚',
     'MA': '摩洛哥', 'SD': '苏丹', 'SS': '南苏丹', 'ER': '厄立特里亚',
-    'DJ': '吉布提', 'ET': '埃塞俄比亚', 'SO': '索马里', 'KE': '肯尼亚',
+    'DJ': '吉布提', 'ET': '埃塞俄比亚', 'SO': '索里亚', 'KE': '肯尼亚',
     'UG': '乌干达', 'TZ': '坦桑尼亚', 'RW': '卢旺达', 'BU': '布隆迪',
     'CD': '刚果(金)', 'CG': '刚果(布)', 'GA': '加蓬', 'EQ': '赤道几内亚',
     'CM': '喀麦隆', 'CF': '中非', 'TD': '乍得', 'GQ': '赤道几内亚',
@@ -49,7 +49,7 @@ const countryNameMap = {
     // 北美洲
     'CA': '加拿大', 'US': '美国', 'MX': '墨西哥', 'GT': '危地马拉',
     'BZ': '伯利兹', 'HN': '洪都拉斯', 'SV': '萨尔瓦多', 'NI': '尼加拉瓜',
-    'CR': '哥斯达黎加', 'PA': '巴拿马', 'JM': '牙买加', 'HT': '海地',
+    'CR': '哥斯达黎加', 'PA': '巴拿ma', 'JM': '牙买加', 'HT': '海地',
     'DO': '多米尼加', 'CU': '古巴', 'BS': '巴哈马', 'TT': '特立尼达和多巴哥',
     'BB': '巴巴多斯', 'AG': '安提瓜和巴布达', 'DM': '多米尼克',
     'KN': '圣基茨和尼维斯', 'LC': '圣卢西亚', 'VC': '圣文森特和格林纳丁斯',
@@ -97,14 +97,13 @@ const flagIconsSupported = new Set([
     'ML','MM','MN','MO','MP','MQ','MR','MS','MT','MU','MV','MW','MX','MY','MZ','NA',
     'NC','NE','NF','NG','NI','NL','NO','NP','NR','NU','NZ','OM','PA','PE','PF','PG',
     'PH','PK','PL','PM','PN','PR','PS','PT','PW','PY','QA','RE','RO','RS','RU','RW',
-    'SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SL','SM','SN','SO','SR','SS','ST',
+    'SA','SB','SC','SD','SE','SG','SH','SI','SJ','SK','SM','SN','SO','SR','SS','ST',
     'SV','SX','SY','SZ','TC','TD','TF','TG','TH','TJ','TK','TL','TM','TN','TO','TR',
     'TT','TV','TW','TZ','UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN',
     'VU','WF','WS','XK','YE','YT','ZA','ZM','ZW',
-
+    'SL',
     // 自定义扩展旗帜
     'GE-AB', 'GE-SO', 'MD-TN',
-
     // 联合国旗帜（特殊处理）
     'UN'
 ]);
@@ -233,7 +232,7 @@ function collectAllCountries() {
         }
     }
 
-    // 排序：代码在前，中文在后
+    // 排序：ISO代码在前，中文在后
     return Array.from(countrySet).sort((a, b) => {
         const aIsCode = /^[A-Z]{2}(-[A-Z]{2})?$/.test(a);
         const bIsCode = /^[A-Z]{2}(-[A-Z]{2})?$/.test(b);
@@ -253,7 +252,7 @@ function renderFilterBubbles() {
 
     // 为每个国家创建气泡
     for (const country of countries) {
-        const displayName = countryNameMap[country] || countryNameMap[countryAliasMap[country]] || country;
+        const displayName = countryNameMap[country] || country;
         const btn = createBubbleBtn(displayName, country, false);
         countryFilterEl.appendChild(btn);
     }
