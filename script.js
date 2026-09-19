@@ -34,7 +34,7 @@ const countryNameMap = {
     // 非洲
     'EG': '埃及', 'LY': '利比亚', 'TN': '突尼斯', 'DZ': '阿尔及利亚',
     'MA': '摩洛哥', 'SD': '苏丹', 'SS': '南苏丹', 'ER': '厄立特里亚',
-    'DJ': '吉布提', 'ET': '埃塞俄比亚', 'SO': '索里亚', 'KE': '肯尼亚',
+    'DJ': '吉布提', 'ET': '埃塞俄比亚', 'SO': '索马里', 'KE': '肯尼亚',
     'UG': '乌干达', 'TZ': '坦桑尼亚', 'RW': '卢旺达', 'BU': '布隆迪',
     'CD': '刚果(金)', 'CG': '刚果(布)', 'GA': '加蓬', 'EQ': '赤道几内亚',
     'CM': '喀麦隆', 'CF': '中非', 'TD': '乍得', 'GQ': '赤道几内亚',
@@ -49,7 +49,7 @@ const countryNameMap = {
     // 北美洲
     'CA': '加拿大', 'US': '美国', 'MX': '墨西哥', 'GT': '危地马拉',
     'BZ': '伯利兹', 'HN': '洪都拉斯', 'SV': '萨尔瓦多', 'NI': '尼加拉瓜',
-    'CR': '哥斯达黎加', 'PA': '巴拿ma', 'JM': '牙买加', 'HT': '海地',
+    'CR': '哥斯达黎加', 'PA': '巴拿马', 'JM': '牙买加', 'HT': '海地',
     'DO': '多米尼加', 'CU': '古巴', 'BS': '巴哈马', 'TT': '特立尼达和多巴哥',
     'BB': '巴巴多斯', 'AG': '安提瓜和巴布达', 'DM': '多米尼克',
     'KN': '圣基茨和尼维斯', 'LC': '圣卢西亚', 'VC': '圣文森特和格林纳丁斯',
@@ -64,13 +64,23 @@ const countryNameMap = {
     'FJ': '斐济', 'SB': '所罗门群岛', 'VU': '瓦努阿图', 'WS': '萨摩亚',
     'TO': '汤加', 'FM': '密克罗尼西亚',
 
-    // 未获广泛承认的国家/地区（中文直接使用）
+    // 未获广泛承认的国家/地区（自定义扩展）
+    'MD-TN': '德涅斯特河沿岸',
+    'GE-SO': '南奥塞梯',
+    'GE-AB': '阿布哈兹',
+    // 兼容 days.txt 中可能使用的中文写法
     '德左': '德涅斯特河沿岸',
     '南奥塞梯': '南奥塞梯',
-    '阿布哈兹': '阿布哈兹',
-    'MD-TN': '德涅斯特河沿岸,
-    'GE-SO': '南奥塞梯',
-    'GE-AB': '阿布哈兹'
+    '阿布哈兹': '阿布哈兹'
+};
+
+// ===== 数据源别名 → 旗帜代码 映射 =====
+// 用于在不修改 days.txt 的前提下，让中文地区名也能渲染旗帜
+const countryAliasMap = {
+    '德左': 'MD-TN',
+    '德涅斯特河沿岸': 'MD-TN',
+    '南奥塞梯': 'GE-SO',
+    '阿布哈兹': 'GE-AB'
 };
 
 // ===== 有flag-icons支持的国家代码集合 =====
@@ -92,7 +102,9 @@ const flagIconsSupported = new Set([
     'TT','TV','TW','TZ','UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN',
     'VU','WF','WS','XK','YE','YT','ZA','ZM','ZW',
 
+    // 自定义扩展旗帜
     'GE-AB', 'GE-SO', 'MD-TN',
+
     // 联合国旗帜（特殊处理）
     'UN'
 ]);
@@ -221,10 +233,10 @@ function collectAllCountries() {
         }
     }
 
-    // 排序：ISO代码在前，中文在后
+    // 排序：代码在前，中文在后
     return Array.from(countrySet).sort((a, b) => {
-        const aIsCode = /^[A-Z]{2}$/.test(a);
-        const bIsCode = /^[A-Z]{2}$/.test(b);
+        const aIsCode = /^[A-Z]{2}(-[A-Z]{2})?$/.test(a);
+        const bIsCode = /^[A-Z]{2}(-[A-Z]{2})?$/.test(b);
         if (aIsCode && !bIsCode) return -1;
         if (!aIsCode && bIsCode) return 1;
         return a.localeCompare(b, 'zh-CN');
@@ -241,7 +253,7 @@ function renderFilterBubbles() {
 
     // 为每个国家创建气泡
     for (const country of countries) {
-        const displayName = countryNameMap[country] || country;
+        const displayName = countryNameMap[country] || countryNameMap[countryAliasMap[country]] || country;
         const btn = createBubbleBtn(displayName, country, false);
         countryFilterEl.appendChild(btn);
     }
@@ -302,8 +314,11 @@ function renderFlags(countries) {
     const container = document.createElement('span');
 
     for (let i = 0; i < countries.length; i++) {
-        const code = countries[i];
-        const displayName = countryNameMap[code] || code;
+        const rawCode = countries[i];
+        // 先做别名转换：中文地区名 → 旗帜代码
+        const code = countryAliasMap[rawCode] || rawCode;
+        // 显示名优先取原始写法，其次取代码映射
+        const displayName = countryNameMap[rawCode] || countryNameMap[code] || code;
 
         if (flagIconsSupported.has(code)) {
             // 有 flag-icons 支持
