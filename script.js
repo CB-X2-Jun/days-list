@@ -7,7 +7,7 @@ const countryNameMap = {
     'CN': '中国', 'HK': '香港', 'MO': '澳门', 'TW': '台湾',
     'JP': '日本', 'KR': '韩国', 'KP': '朝鲜', 'MN': '蒙古',
     'VN': '越南', 'LA': '老挝', 'KH': '柬埔寨', 'TH': '泰国',
-    'MY': '马来西亚', 'SG': '新加坡', 'ID': '印尼', 'PH': '菲律宾',
+    'MY': '马来西亚', 'SG': '新加坡', 'ID': '印度尼西亚', 'PH': '菲律宾',
     'BN': '文莱', 'MM': '缅甸', 'IN': '印度', 'NP': '尼泊尔',
     'BT': '不丹', 'BD': '孟加拉国', 'LK': '斯里兰卡', 'MV': '马尔代夫',
     'PK': '巴基斯坦', 'AF': '阿富汗', 'IR': '伊朗', 'IQ': '伊拉克',
@@ -65,9 +65,12 @@ const countryNameMap = {
     'TO': '汤加', 'FM': '密克罗尼西亚',
 
     // 未获广泛承认的国家/地区（中文直接使用）
-    '德左': '德左',
+    '德左': '德涅斯特河沿岸',
     '南奥塞梯': '南奥塞梯',
-    '阿布哈兹': '阿布哈兹'
+    '阿布哈兹': '阿布哈兹',
+    'MD-TN': '德涅斯特河沿岸,
+    'GE-SO': '南奥塞梯',
+    'GE-AB': '阿布哈兹'
 };
 
 // ===== 有flag-icons支持的国家代码集合 =====
@@ -88,6 +91,8 @@ const flagIconsSupported = new Set([
     'SV','SX','SY','SZ','TC','TD','TF','TG','TH','TJ','TK','TL','TM','TN','TO','TR',
     'TT','TV','TW','TZ','UA','UG','UM','US','UY','UZ','VA','VC','VE','VG','VI','VN',
     'VU','WF','WS','XK','YE','YT','ZA','ZM','ZW',
+
+    'GE-AB', 'GE-SO', 'MD-TN',
     // 联合国旗帜（特殊处理）
     'UN'
 ]);
@@ -139,7 +144,7 @@ async function loadAndParseData() {
         // 使用示例数据作为后备
         allHolidays = [
             { date: '01-01', dateStart: '01-01', name: '元旦（新年）', countries: ['UN'] },
-            { date: '06-01', dateStart: '06-01', name: '儿童节', countries: ['UN', 'CN', 'PL'] },
+            { date: '06-01', dateStart: '06-01', name: '儿童节', countries: ['UN'] },
             { date: '12-25', dateStart: '12-25', name: '圣诞节', countries: ['UN'] },
         ];
     }
