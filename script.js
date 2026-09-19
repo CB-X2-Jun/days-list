@@ -16,7 +16,7 @@ const countryNameMap = {
     'LB': '黎巴嫩', 'SY': '叙利亚', 'IL': '以色列', 'PS': '巴勒斯坦',
     'CY': '塞浦路斯', 'TR': '土耳其', 'GE': '格鲁吉亚', 'AM': '亚美尼亚',
     'AZ': '阿塞拜疆', 'KZ': '哈萨克斯坦', 'UZ': '乌兹别克斯坦',
-    'TJ': '塔吉克斯坦', 'KG': '吉尔吉斯斯坦', 'TM': '土库曼斯坦',
+    'TJ': '塔吉克斯坦', 'KG': '吉尔吉斯斯坦', 'TM': '土库曼斯坦', 'TL': '东帝汶',
 
     // 欧洲
     'RU': '俄罗斯', 'UA': '乌克兰', 'BY': '白俄罗斯', 'MD': '摩尔多瓦',
@@ -228,7 +228,9 @@ function collectAllCountries() {
 
     for (const holiday of allHolidays) {
         for (const country of holiday.countries) {
-            countrySet.add(country);
+            // ★ 归一化：中文别名统一转成标准代码
+            const normalized = countryAliasMap[country] || country;
+            countrySet.add(normalized);
         }
     }
 
@@ -402,7 +404,10 @@ function getFilteredHolidays() {
     }
 
     return allHolidays.filter(holiday =>
-        holiday.countries.includes(activeFilter)
+        holiday.countries.some(c => {
+            const normalized = countryAliasMap[c] || c;
+            return normalized === activeFilter;
+        })
     );
 }
 
